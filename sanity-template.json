@@ -1,7 +1,7 @@
 {
   "version": 2,
   "title": "Lifestyled: Editorial and E-Commerce",
-  "description": "A lifestyle blog with editorial material and e-commerce functionality. Built with Next.js and Sanity, and featuring integration with BigCommerce, embedded calls to purchasing action, and international routing",
+  "description": "A lifestyle blog with editorial material and e-commerce functionality. Built with BigCommerce, Next.js and Sanity, it features rich content, embedded calls to purchasing action, and international routing",
   "previewMedia": {
     "type": "image",
     "src": "assets/frontend.png",
