@@ -2,7 +2,7 @@
 
 This starter is built to showcase a mix of editorial and e-commerce, taking advantage of page-building components, BigCommerce data integration, and internationalization tooling.
 
-[image here later]
+![frontend screenshot of this starter](https://github.com/sanity-io/sanity-template-bigcommerce-editorial/blob/main/assets/frontend.png)
 
 ## BigCommerce
 
@@ -49,20 +49,18 @@ npm install && cd /studio && sanity install
 5. Get setup with BigCommerce. If you don't have an account, start one. Then go to Advanced Settings/API Accounts. I'd recommend 2 separate, specific tokens, since you'll be interfacing with the API in two different, potentially sensitive ways. One should have a 'Cart' scope and the other should have Storefront API Tokens and Products scope. For the rest of this readme I'll refer to them as 'cart token' and 'import token'.
 
 6. Populate your environment variables. There is an env.example file in the main folder, and another in the Sanity studio. Rename them to `.env.development`. Here's some tips on filling out the main file:
-```
-SANITY_API_TOKEN={if you don't have one, set one up on manage.sanity.io}
-SANITY_STUDIO_API_DATASET={this came from the last step -- you usually want 'production'}
-SANITY_STUDIO_API_PROJECT_ID={also came from the last step -- yuo can always find this on manage.sanity.io}
-BIGCOMMERCE_API_TOKEN={cart token}
-BIGCOMMERCE_API_URL={usually like https://api.bigcommerce.com/stores/{your store hash}/v3}
-```
+
+- `SANITY_API_TOKEN=`if you don't have one, set one up on manage.sanity.io!
+- `SANITY_STUDIO_API_DATASET=` This came from the last step -- you usually want 'production'
+- `SANITY_STUDIO_API_PROJECT_ID=` This also came from the last step -- you can also always find this on manage.sanity.io.
+- `BIGCOMMERCE_API_TOKEN=` This is your cart token from BigCommerce.
+- `BIGCOMMERCE_API_URL=` It's usually like https://api.bigcommerce.com/stores/{your store hash}/v3. See below for tips on finding your store hash!
+
 
 Here are the guidelines for the  studio `.env.development` file:
 
-```
-SANITY_STUDIO_BIGCOMMERCE_STORE_HASH={you can find this anywhere you're logged into your BigCommerce account -- for example, if the URL in my browser is https://store-rix57ghiz3.mybigcommerce.com/manage/dashboard, "rix57ghiz3" is the value I should put here}
-SANITY_STUDIO_BIGCOMMERCE_STORE_API_TOKEN={this is the import token you made in the last step}
-```
+- `SANITY_STUDIO_BIGCOMMERCE_STORE_HASH=` You can find this anywhere you're logged into your BigCommerce account -- for example, if the URL in my browser is https://store-rix57ghiz3.mybigcommerce.com/manage/dashboard, "rix57ghiz3" is the value I should put here.
+- `SANITY_STUDIO_BIGCOMMERCE_STORE_API_TOKEN=` This is the "import" token you made in the last step.
 
 5. Be sure you have `concurrently` installed (`npm install -g concurrently`). Run the command below to start the development server:
 
@@ -83,7 +81,7 @@ tar -xf production.tar.gz
 This will provide you with a folder like `production-export-xxx`.  Then go to your /studio folder and run `sanity dataset import {production-export-xxxfolder}/data.ndjson`
 
 
-2. Now that your keys and base data are all set, you can import data from BigCommerce! Go to your studio folder and run `sanity exec src/bigCommerceSync`. If you receive undefined errors for any of the environment variables, try setting your sanity env with `export SANITY_ACTIVE_ENV=development` from the command line.
+2. Now that your keys and base data are all set, you can import data from BigCommerce! Go to your studio folder and run `sanity exec src/bigCommerceSync.js`. If you receive undefined errors for any of the environment variables, try setting your sanity env with `export SANITY_ACTIVE_ENV=development` from the command line.
 
 ## Internationalization
 
