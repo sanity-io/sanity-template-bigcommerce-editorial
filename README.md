@@ -83,9 +83,11 @@ This will provide you with a folder like `production-export-xxx`.  Then go to yo
 
 2. Now that your keys and base data are all set, you can import data from BigCommerce! Go to your studio folder and run `sanity exec src/bigCommerceSync.js`. If you receive undefined errors for any of the environment variables, try setting your sanity env with `export SANITY_ACTIVE_ENV=development` from the command line.
 
+When the script completes successfully, it will also provide you with an `data.ndjson` file. Go ahead and import that as well (the two datasets should live happily together!)
+
 ## Internationalization
 
-I18n is currently only available on product pages, as a guideline. Set the "override" fields in products in Sanity and use Next.js routing (e.g., 'localhost:3000/fr/shop/product-slug' to see the French version of a product. 
+I18n is currently only available on product pages, as a guideline. Set the "override" fields in products in Sanity and use Next.js routing (e.g., `localhost:3000/fr/shop/product-slug` to see the French version of a product. 
 
 ## License
 
