@@ -83,7 +83,7 @@ This will provide you with a folder like `production-export-xxx`.  Then go to yo
 
 2. Now that your keys and base data are all set, you can import data from BigCommerce! Go to your studio folder and run `sanity exec src/bigCommerceSync.js`. If you receive undefined errors for any of the environment variables, try setting your sanity env with `export SANITY_ACTIVE_ENV=development` from the command line.
 
-When the script completes successfully, it will also provide you with an `data.ndjson` file. Go ahead and import that as well (the two datasets should live happily together!)
+When the script completes successfully, it will also provide you with an `data.ndjson` file. Go ahead and import that as well (the two datasets should coexist happily together in the same dataset!)
 
 ## Internationalization
 
