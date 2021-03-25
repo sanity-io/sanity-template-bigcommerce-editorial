@@ -1,0 +1,44 @@
+{
+  "root": true,
+  "project": {
+    "name": "sanity-template-bigcommerce-editorial"
+  },
+  "api": {
+    "projectId": "rrw497vy",
+    "dataset": "production"
+  },
+  "plugins": [
+    "@sanity/base",
+    "@sanity/components",
+    "@sanity/default-layout",
+    "@sanity/default-login",
+    "@sanity/desk-tool",
+    "asset-source-unsplash",
+    "@sanity/color-input"
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "@sanity/vision"
+      ]
+    }
+  },
+  "parts": [
+    {
+      "name": "part:@sanity/base/schema",
+      "path": "./schemas/schema"
+    },
+    {
+      "implements": "part:@sanity/base/document-actions/resolver", 
+      "path": "./src/resolveDocumentActions.js" 
+    },
+    {
+      "name": "part:@sanity/base/initial-value-templates",
+      "path": "./src/initialValueTemplates.js"
+    },
+    {
+      "name": "part:@sanity/desk-tool/structure",
+      "path": "./src/deskStructure.js"
+    }
+  ]
+}

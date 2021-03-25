@@ -1,0 +1,119 @@
+import { GetStaticPaths, GetStaticProps } from 'next'
+import { useRouter } from 'next/router'
+import { Category, SubsectionArticles, CategoryFeature } from '../../types'
+
+import { Box, Container, Heading, Inline } from '@sanity/ui'
+import { NavBar, SubsectionBar } from '$components'
+import { handleBlockFeature, coalesceCampaignAndFeature } from '$utils/helpers'
+
+import { getClient, usePreviewSubscription } from '$utils/sanity'
+import { GiWomanElfFace } from 'react-icons/gi'
+import { categoryAndFeaturedArticleQuery, 
+         subsectionArticleQueryHasFeature,
+         subsectionArticleQueryNoFeature }  from '$utils/sanityGroqQueries'
+
+
+export default function Hub({categories, subsectionArticleData, categoryData, preview}
+  : {categories: Category[],
+    subsectionArticleData: SubsectionArticles[],
+    categoryData: CategoryFeature,
+    preview: boolean}) {
+
+  const router = useRouter()
+  const hub = router.query.hub ?? ""
+
+  const {data: category} = usePreviewSubscription(categoryAndFeaturedArticleQuery, {
+    params: {hub: hub},
+    initialData: categoryData,
+    enabled: preview || router.query.preview !== null,
+  })
+
+  let featuredArticleDisplay = (<span />) 
+  if (category.featuredArticle) {
+    const formattedFeature = coalesceCampaignAndFeature(category.featuredArticle)
+    featuredArticleDisplay = handleBlockFeature(category.featuredArticleDisplay, formattedFeature)
+  }
+
+
+  //TODO: we could probably have more elegant handling for no features
+  let subsectionArticles = subsectionArticleData
+  if (category.featuredArticle) {
+    const {data: subsectionArticles} = usePreviewSubscription(subsectionArticleQueryHasFeature, {
+      params: {id: category.categoryId,
+             featuredArticleId: category.featuredArticle._id},
+      initialData: subsectionArticleData,
+      enabled: preview || router.query.preview !== null,
+    })
+  } else {
+    const {data: subsectionArticles} = usePreviewSubscription(subsectionArticleQueryNoFeature, {
+      params: {id: category.categoryId},
+      initialData: subsectionArticleData,
+      enabled: preview || router.query.preview !== null,
+    })
+  }
+
+
+  const subsectionRows = subsectionArticles
+          .filter(sub => sub.articles.length)
+          .map((subsection, i) => (
+            <SubsectionBar hub={hub} subsectionArticles={subsection} key={i} /> 
+          )
+  )
+
+  return (
+    <>
+      <NavBar categories={categories} />
+      <Container width={1}>
+        <Box paddingY={[3,5]}>
+          <Heading size={2}>
+            <Inline>
+              <GiWomanElfFace style={{margin: "0 1rem"}}/>
+              {category.name}
+            </Inline>
+          </Heading>
+        </Box>
+          { featuredArticleDisplay }
+        <Box>
+          { subsectionRows }
+        </Box>
+      </Container>
+    </>
+  )
+}
+
+export const getStaticPaths: GetStaticPaths = async (context) => {
+
+  const categories = await getClient().fetch(
+    `*[_type == "category"].slug.current`)
+
+    return {
+      ...{paths: categories.map((cat: string) => ({params: {hub: cat}}))},
+     fallback: true
+   }
+}
+
+export const getStaticProps: GetStaticProps = async ({params, preview = false }) => {
+
+  const category = await getClient(preview).fetch(
+        categoryAndFeaturedArticleQuery, params)
+
+  let subsectionArticles;
+  if (category.featuredArticle) {
+    subsectionArticles = await getClient(preview).fetch(
+        subsectionArticleQueryHasFeature, {id: category.categoryId,
+             featuredArticleId: category.featuredArticle._id})
+  } else {
+    subsectionArticles = await getClient(preview).fetch(
+        subsectionArticleQueryNoFeature, {id: category.categoryId})
+  }
+
+  return ({
+    props: {
+      categories: await getClient(preview).fetch(`*[_type == "category"]{name,'slug': slug.current}`),
+      subsectionArticleData: subsectionArticles,
+      categoryData: category,
+      preview
+    }
+  })
+}
+

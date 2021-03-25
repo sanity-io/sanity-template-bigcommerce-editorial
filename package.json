@@ -1,0 +1,13 @@
+{
+  "name": "sanity-template-bigcommerce-editorial",
+  "version": "1.0.0",
+  "description": "A lifestyle blog with editorial material and e-commerce functionality. Built with Next.js and Sanity, and featuring integration with BigCommerce, embedded calls to purchasing action, and international routing",
+  "main": "index.js",
+  "scripts": {
+    "watch": "sanity-template build && cp .env.local.test build/.env.local && sanity-template watch --template-values template-values.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

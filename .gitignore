@@ -1,0 +1,47 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+/.pnp
+.pnp.js
+
+# testing
+coverage
+
+static
+
+# next.js
+.next
+out
+
+#dont embed data in repo
+*.ndjson
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env.local
+.env.development.local
+.env.development
+.env.test.local
+.env.production.local
+
+# vercel
+.vercel
+
+#vim
+.swp
+.swo
+
+#data
+*.ndjson

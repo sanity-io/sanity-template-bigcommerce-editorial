@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "title": "Lifestyled: Editorial and E-Commerce",
+  "description": "A lifestyle blog with editorial material and e-commerce functionality. Built with Next.js and Sanity, and featuring integration with BigCommerce, embedded calls to purchasing action, and international routing",
+  "previewMedia": {
+    "type": "image",
+    "src": "assets/frontend.png",
+    "alt": "Next.js frontend with Sanity data displaying"
+  },
+  "technologies": [
+    {
+      "id": "vercel",
+      "name": "Vercel",
+      "url": "https://vercel.com/"
+    },
+    {
+      "id": "nextjs",
+      "name": "Next.js",
+      "url": "https://nextjs.org"
+    },
+    {
+      "id": "bigcommerce",
+      "name": "BigCommerce",
+      "url": "https://bigcommerce.com"
+    }
+  ],
+  "deployment": {
+    "provider": "vercel",
+    "studio": { "basePath": "/studio" },
+    "corsOrigins": [
+      {
+        "origin": "http://localhost:3000",
+        "allowCredentials": true
+      }
+    ]
+  }
+
+}
