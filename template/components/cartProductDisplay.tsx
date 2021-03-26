@@ -12,7 +12,7 @@ export function CartProductDisplay({product}: {product: Product}) {
    return (
      <Inline>
        <Box flex={1} marginX={1} style={{width: '80px', height: '80px'}}>
-           <ResponsiveFixedRatioImage imageUrl={urlFor(product.image)} />
+           <ResponsiveFixedRatioImage imageUrl={urlFor(product.image).url() ?? ""} />
         </Box>
        <Box flex={1} paddingX={1} style={{maxWidth: '200px'}}>
           <Text>

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 
 import { Stack, Inline, Button, Box, Heading, Text, Badge, Flex, Grid } from '@sanity/ui'
 
-import { Product, Category } from '../../types'
+import { Product, Category, Slug } from '../../types'
 import { useStore, useAddItem } from '../../contexts/bigcommerce-context'
 
 import { getClient, urlFor, PortableText, usePreviewSubscription } from '$utils/sanity'
@@ -34,7 +34,7 @@ export default function ProductPage({categories, productData, preview}
       <NavBar categories={categories} />
       <Grid columns={[1, 1, 1, 2]}>
         <Flex flex={1} justify='center' margin={5} padding={[2, 3, 5]}>
-          <ResponsiveFixedRatioImage imageUrl={urlFor(product.image)} />
+          <ResponsiveFixedRatioImage imageUrl={urlFor(product.image).url() ?? ""} />
         </Flex> 
         <Box flex={1} margin={4} style={{minWidth: '200px'}}>
           <Stack space={4} >
@@ -53,7 +53,7 @@ export default function ProductPage({categories, productData, preview}
             <hr />
             <Button text='Add to Bag' mode='ghost' 
               //don't let people add NON BigCommerce (e.g., test) items!
-              disabled={ product._id.search('imported-BC')}
+              disabled={ !!product._id.search('imported-BC')}
               onClick={() => addItemToCart(product._id)} />
             <hr /> 
             <Heading size={1}>
@@ -66,18 +66,23 @@ export default function ProductPage({categories, productData, preview}
           </Stack>
         </Box>
       </Grid> 
-      <SubsectionBar hub="" subsectionArticles={{name: "See Related Articles", articles: product.relatedArticles}} /> 
+      <SubsectionBar hub="" subsectionArticles={
+        {name: "See Related Articles", 
+         articles: product.relatedArticles,
+         slug: ""}} /> 
     </>
     )
 }
             
 export const getStaticPaths: GetStaticPaths = async ({locales}) => {
-  const productSlugs = await getClient().fetch(
+  const productSlugs: Slug[] = await getClient().fetch(
     `*[_type == "product"]{
       'slug': slug.current
     }`)
 
-  const slugsWithLocales = locales.map(locale => (
+  const typedLocales = locales ?? []
+
+  const slugsWithLocales = typedLocales.map(locale => (
               productSlugs.map(slug => (
                 {params: {...slug}, locale: locale}
               ))
@@ -90,7 +95,8 @@ export const getStaticPaths: GetStaticPaths = async ({locales}) => {
 }
 
 export const getStaticProps: GetStaticProps = async ({params, preview = false}) => {
-  const product = await getClient(preview).fetch(productDetailPageQuery, params)
+  const product = await getClient(preview).fetch(productDetailPageQuery, 
+    {slug: params?.slug})
 
   return ({
     props: {

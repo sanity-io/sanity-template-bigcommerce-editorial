@@ -1,11 +1,11 @@
 import {Heading, Box, Flex, Text, Button} from '@sanity/ui'
-import { Color } from '../types'
+import { Color, Image } from '../types'
 import Link from 'next/link'
 import { urlFor, PortableText } from '$utils/sanity'
 
 export function SolidBlockFeature(
   {title, text, image, url, orientation, textColor, blockColor}
-    : {title: string, text: any | any[], image: string, url: string, orientation: string,
+    : {title: string, text: any | any[], image: Image, url: string, orientation: string,
       textColor: Color, blockColor: Color}) {
 
     const solidBlockStyle = { align: "center",
@@ -41,7 +41,7 @@ export function SolidBlockFeature(
     const imageBlock =  (
         <Box flex={1} key='image' style={{ minWidth: '350px', minHeight: '350px', maxHeight: "500px"}}>  
           <img style={{height: '100%', width: '100%', objectFit: "cover"}}
-               src={urlFor(image)}/>
+               src={urlFor(image).url() ?? ""}/>
         </Box>
     )
 

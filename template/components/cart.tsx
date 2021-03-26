@@ -13,9 +13,7 @@ export const Cart = () => {
       <CartProductDisplay
         key={`cart-${i}`}
         product={product}
-        displayHorizontal={true}
-        width={100}
-        shopNow={false} />
+        />
   ))
 
   if (isCartOpen) {

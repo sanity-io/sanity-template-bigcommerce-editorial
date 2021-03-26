@@ -3,7 +3,7 @@ import Error from 'next/error'
 import { useRouter } from 'next/router'
 import { Stack, Box } from '@sanity/ui'
 
-import { Product, Category } from '../../types'
+import { Slug, Category, Campaign, Color } from '../../../types'
 import { getClient, urlFor, PortableText, usePreviewSubscription } from '$utils/sanity'
 import { campaignQuery }  from '$utils/sanityGroqQueries'
 
@@ -25,16 +25,21 @@ export default function CampaignPage({categories, campaignData, preview}
     enabled: preview || router.query.preview !== null,
   })
 
-  const parsedContent = campaign.content.map(({_type, ...block}, i) => (
+  const parsedContent = campaign.content.map(({_type, ...block}
+    : {_type: string}, i: number) => (
     <Box key={i} padding={0}>
       { handleBlockFeature(_type, block, true) }
     </Box>
   ))
 
+  const blockColor: Color = {hex: '#FFF'}
+  const textColor: Color = {hex: '#000'}
+
   const campaignFeatureProps = {
-    ...campaign,
-    blockColor: {hex: '#FFF'},
-    textColor: {hex: '#000'},
+    ...{title: campaign.title, text: campaign.text, image: campaign.image},
+    url: "",
+    blockColor,
+    textColor,
     orientation: 'right'
   }
 
@@ -51,7 +56,7 @@ export default function CampaignPage({categories, campaignData, preview}
 }
             
 export const getStaticPaths: GetStaticPaths = async (context) => {
-  const campaignSlugs = await getClient().fetch(
+  const campaignSlugs: Slug[] = await getClient().fetch(
     `*[_type == "campaign"]{
       'slug': slug.current
     }`)
@@ -63,7 +68,7 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
 }
 
 export const getStaticProps: GetStaticProps = async ({params, preview = false}) => {
-  const campaign = await getClient(preview).fetch(campaignQuery, params)
+  const campaign = await getClient(preview).fetch(campaignQuery, {slug: params?.slug})
 
 
   return ({

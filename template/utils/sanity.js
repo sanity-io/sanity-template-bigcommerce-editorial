@@ -22,7 +22,7 @@ const config = {
 
 export const sanityClient = createClient(config);
 //TODO: put placeholder "problem fetching image!" as default
-export const urlFor = (source) => createImageUrlBuilder(config).image(source) || "";
+export const urlFor = (source) => createImageUrlBuilder(config).image(source);
 
 // Set up a preview client with serverless authentication for drafts
 export const previewClient = createClient({

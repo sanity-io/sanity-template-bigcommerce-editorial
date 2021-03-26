@@ -85,9 +85,7 @@ export const articlePageQuery = groq`
       "storyProducts": content[]{
           _type == 'listItem' || _type == 'productsDisplay'=>{
             products[]->{
-              name, price, description, manufacturer,
-              'slug': slug.current,
-              'image': productImage.asset._ref
+            ${productQuery}
             }
           },
         },
@@ -95,9 +93,7 @@ export const articlePageQuery = groq`
           ...,
           _type == 'listItem' ||  _type == 'productsDisplay'=>{
             products[]->{
-              name, price, description, manufacturer,
-              'slug': slug.current,
-              'image': productImage.asset._ref
+              ${productQuery}
             }
           },
         },

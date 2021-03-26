@@ -56,7 +56,7 @@ export default function Hub({categories, subsectionArticleData, categoryData, pr
   const subsectionRows = subsectionArticles
           .filter(sub => sub.articles.length)
           .map((subsection, i) => (
-            <SubsectionBar hub={hub} subsectionArticles={subsection} key={i} /> 
+            <SubsectionBar hub={(typeof hub == 'string') ? hub : hub[0]} subsectionArticles={subsection} key={i} /> 
           )
   )
 
@@ -95,7 +95,7 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
 export const getStaticProps: GetStaticProps = async ({params, preview = false }) => {
 
   const category = await getClient(preview).fetch(
-        categoryAndFeaturedArticleQuery, params)
+        categoryAndFeaturedArticleQuery, {hub: params?.hub})
 
   let subsectionArticles;
   if (category.featuredArticle) {

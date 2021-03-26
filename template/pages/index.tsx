@@ -4,7 +4,7 @@ import { groq } from 'next-sanity'
 
 import { Card, Container, Flex, Stack, Text } from '@sanity/ui'
 
-import { Category, Article } from '../types'
+import { Category, Article, MonthArticle } from '../types'
 import { getClient, usePreviewSubscription } from '$utils/sanity'
 import { coalesceCampaignAndFeature } from '$utils/helpers'
 import { IndexArticleGrid, NavBar, SubsectionBar } from '$components'
@@ -38,7 +38,7 @@ function IndexPage({categories, featuredArticleData, recentArticleData, preview}
 
   const formattedFeatures = supplementedFeatures.map(feat => coalesceCampaignAndFeature(feat))
 
-  const articlesByMonth = []
+  const articlesByMonth: MonthArticle[] = []
   recentArticles.forEach(article => {
     const date = new Date(article.publishedDate)
     const month = new Intl.DateTimeFormat('en', { month: 'long' }).format(date);
@@ -62,7 +62,8 @@ function IndexPage({categories, featuredArticleData, recentArticleData, preview}
           <IndexArticleGrid features={formattedFeatures} /> 
           <Container width={1}>
             { articlesByMonth.map((month, i) => (
-              <SubsectionBar hub="" subsectionArticles={month} key={i} />
+              <SubsectionBar hub="" subsectionArticles={{...month, slug: ""}} key={i} />
+
             ))}
           </Container>
         </Stack>

@@ -10,7 +10,7 @@ export function TextUnderFeature({title, text, image, url}
       <Stack>
           <Box flex={1} style={{ minWidth: '350px', maxHeight: "400px"}}>  
             <img style={{height: '100%', width: '100%', objectFit: "cover"}}
-              src={urlFor(image) 
+              src={urlFor(image).url() ?? "" 
               }/>
           </Box>
           <Box paddingY={[2,3]}>

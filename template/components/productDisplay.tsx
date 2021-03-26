@@ -8,7 +8,7 @@ export function ProductDisplay({product, displayHorizontal, shopNow, width}
 
   const imgBox = (
     <Box style={{width: `${width}px`}}>
-      <ResponsiveFixedRatioImage imageUrl={urlFor(product.image)} />
+      <ResponsiveFixedRatioImage imageUrl={urlFor(product.image).url() ?? ""} />
     </Box>
   )
 

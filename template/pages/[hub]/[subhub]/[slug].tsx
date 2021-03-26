@@ -38,7 +38,7 @@ export default function ArticlePage({categories, articleData, preview}
           <Stack space={2}>
             <SocialBar />
             <Box style={{maxHeight: '800px'}}>
-              <img src={urlFor(article.image) } 
+              <img src={urlFor(article.image).url() ?? "" } 
                 style={{width: "100%", height: "100%", objectFit: "cover"}}/>
             </Box>
               <Box padding={[1, 3, 4]}>
@@ -84,7 +84,8 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
 
 export const getStaticProps: GetStaticProps = async ({params, preview = false}) => {
 
-  const article = await getClient(preview).fetch(articlePageQuery, params)
+  const article = await getClient(preview).fetch(articlePageQuery,
+    {slug: params?.slug})
 
   return ({
     props: {

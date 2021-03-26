@@ -31,7 +31,7 @@ export function IndexFeaturePane({feature, headingSize}: {feature: Feature, head
   return (
     <Link href={feature.url}>
       <PaneContainer>
-        <PaneImage src={urlFor(feature.image).url()} />
+        <PaneImage src={urlFor(feature.image).url() ?? ""} />
         <OverlayText>
           <Heading size={headingSize}>
             { feature.title }

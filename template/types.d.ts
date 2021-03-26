@@ -26,7 +26,9 @@ export type Product = {
   description: string,
   price: string,
   manufacturer: string,
-  relatedArticles: Article[]
+  relatedArticles: Article[],
+  quantity: number?,
+  lineID: string?
 }
 
 export type Article = {
@@ -40,6 +42,11 @@ export type Article = {
   storyProducts: StoryProducts[],
   excerpt: any[] | any?,
   content: any[] | any?
+}
+
+export type MonthArticle = {
+  name: string,
+  articles: Article[]
 }
 
 export type Feature = {
@@ -88,5 +95,10 @@ export type Campaign = {
   title: string,
   text: any[] | any?,
   content: any[] | any?,
-  products: Product[]
+  products: Product[],
+  hideLeadBlock: boolean
+}
+
+export type Slug = {
+  slug: string
 }

@@ -9,7 +9,7 @@ export function ArticlePane({article} : {article: Article}) {
         <Link href={`/${article.category.slug}/${article.subsection.slug}/${article.slug}`}>
           <Stack space={2} >
             <Box padding={2}>
-              <img style={{height: '350px', width: '100%', objectFit: 'cover'}} src={urlFor(article.image).url() }/>
+              <img style={{height: '350px', width: '100%', objectFit: 'cover'}} src={urlFor(article.image).url() ?? ""}/>
              </Box>
             <Heading size={1}>
                 {article.title}
