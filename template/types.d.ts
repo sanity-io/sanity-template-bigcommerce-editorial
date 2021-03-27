@@ -12,8 +12,12 @@ export type Color = {
   hex: string
 }
 
+export type ImageAsset = {
+  _ref: string
+}
+
 export type Image = {
-  _ref: string,
+  asset: ImageAsset
   crop: any,
   hotspot: any
 }

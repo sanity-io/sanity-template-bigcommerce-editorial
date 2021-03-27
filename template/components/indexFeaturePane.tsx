@@ -28,10 +28,15 @@ const OverlayText = styled.div`
 `
 
 export function IndexFeaturePane({feature, headingSize}: {feature: Feature, headingSize: number}) {
+  let imageUrl: string = "/blank.png"
+  if (feature.image && feature.image.asset._ref) {
+    imageUrl = urlFor(feature.image).url() as string
+  } 
+
   return (
     <Link href={feature.url}>
       <PaneContainer>
-        <PaneImage src={urlFor(feature.image).url() ?? ""} />
+        <PaneImage src={imageUrl} />
         <OverlayText>
           <Heading size={headingSize}>
             { feature.title }

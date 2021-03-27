@@ -40,19 +40,21 @@ You can also clone this repo and do some configuration locally -- we'll guide yo
 
 3. If you came from the one-click starter, add your own `projectTitle`, `projectId,` and `dataset` in `/studio/sanity.json`. You can also find these on [manage.sanity.io](https://manage.sanity.io). If you're starting from cloning to this repo, run `sanity init` in that `/studio` folder.
 
-4. Ensure your studio is ready to run locally.
+4. Add CORS origins in your settings for this studio. At least add them for `localhost:3333` and `localhost:3000`. If you had the one-click starter, also add whatever Vercel URL is created.
+
+5. Ensure your studio is ready to run locally by running the following. 
 
 ```bash
 npm install && cd /studio && sanity install
 ```
 
-5. Get setup with BigCommerce. If you don't have an account, start one. Then go to Advanced Settings/API Accounts. I'd recommend 2 separate, specific tokens, since you'll be interfacing with the API in two different, potentially sensitive ways. One should have a 'Cart' scope and the other should have Storefront API Tokens and Products scope. For the rest of this readme I'll refer to them as 'cart token' and 'import token'.
+5. Get set up with BigCommerce. If you don't have an account, start one. Then go to Advanced Settings/API Accounts. I'd recommend 2 separate, specific tokens, since you'll be interfacing with the API in two different, potentially sensitive ways. One should have a 'Cart' scope and the other should have Storefront API Tokens and Products scope. For the rest of this readme I'll refer to them as 'cart token' and 'import token'.
 
 6. Populate your environment variables. There is an env.example file in the main folder, and another in the Sanity studio. Rename them to `.env.development`. Here's some tips on filling out the main file:
 ```
-SANITY_API_TOKEN={if you don't have one, set one up on manage.sanity.io}
-SANITY_STUDIO_API_DATASET={this came from the last step -- you usually want 'production'}
-SANITY_STUDIO_API_PROJECT_ID={also came from the last step -- yuo can always find this on manage.sanity.io}
+SANITY_API_TOKEN={if you don't have one, set one up on manage.sanity.io. Be sure it has 'allow credentials', and don't expose it anywhere!}
+NEXT_PUBLIC_SANITY_DATASET={this came from the last step -- you usually want 'production'}
+NEXT_PUBLIC_SANITY_PROJECT_ID={also came from the last step -- yuo can always find this on manage.sanity.io}
 BIGCOMMERCE_API_TOKEN={cart token}
 BIGCOMMERCE_API_URL={usually like https://api.bigcommerce.com/stores/{your store hash}/v3}
 ```
@@ -62,6 +64,7 @@ Here are the guidelines for the  studio `.env.development` file:
 ```
 SANITY_STUDIO_BIGCOMMERCE_STORE_HASH={you can find this anywhere you're logged into your BigCommerce account -- for example, if the URL in my browser is https://store-rix57ghiz3.mybigcommerce.com/manage/dashboard, "rix57ghiz3" is the value I should put here}
 SANITY_STUDIO_BIGCOMMERCE_STORE_API_TOKEN={this is the import token you made in the last step}
+SANITY_STUDIO_PREVIEW_URL=localhost:3000 if you're developing locally, otherwise whatever staging environment you'd like to set up.
 ```
 
 5. Be sure you have `concurrently` installed (`npm install -g concurrently`). Run the command below to start the development server:

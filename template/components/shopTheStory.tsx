@@ -20,7 +20,7 @@ export function ShopTheStory({products}: {products: StoryProducts[]}) {
     <Card border marginX={[2,3,4,5]} padding={[2,3]}>
       <Heading style={{textAlign: 'center'}}>Shop It Now!</Heading>
       <Box paddingY={5}>
-        <Grid columns={[0,0,1,1,2]}>
+        <Grid columns={[0,0,1,1,2]} gap={[0,0,1,1,2]}>
           { productDisplays }
         </Grid>
       </Box>

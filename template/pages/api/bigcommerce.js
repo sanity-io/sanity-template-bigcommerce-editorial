@@ -72,7 +72,6 @@ body: body
         
           //per BC's docs, deleting the last line item deletes the cart https://developer.bigcommerce.com/api-reference/store-management/carts/cart-items/deletecartlineitem, so make a new one
         if (bcCartResponse.status == 204) {
-          console.log('got the 204') 
           bcCartResponse = await fetch(`${process.env.BIGCOMMERCE_API_URL}/carts`, {
                method: "POST",
                ...bigCommerceHeaders,

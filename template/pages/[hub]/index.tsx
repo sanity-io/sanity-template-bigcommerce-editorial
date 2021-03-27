@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from 'next'
+import Error from 'next/error'
 import { useRouter } from 'next/router'
 import { Category, SubsectionArticles, CategoryFeature } from '../../types'
 
@@ -19,13 +20,18 @@ export default function Hub({categories, subsectionArticleData, categoryData, pr
     categoryData: CategoryFeature,
     preview: boolean}) {
 
-  const router = useRouter()
+  const router = useRouter();
+  if (!router.isFallback && !categoryData?.categoryId) {
+    return <Error statusCode={404} />;
+  } else if (router.isFallback) {
+    return <div>Loading...</div>
+  }
   const hub = router.query.hub ?? ""
 
   const {data: category} = usePreviewSubscription(categoryAndFeaturedArticleQuery, {
     params: {hub: hub},
     initialData: categoryData,
-    enabled: preview || router.query.preview !== null,
+    enabled: preview || !!router.query.preview,
   })
 
   let featuredArticleDisplay = (<span />) 
@@ -42,13 +48,13 @@ export default function Hub({categories, subsectionArticleData, categoryData, pr
       params: {id: category.categoryId,
              featuredArticleId: category.featuredArticle._id},
       initialData: subsectionArticleData,
-      enabled: preview || router.query.preview !== null,
+      enabled: preview || !!router.query.preview,
     })
   } else {
     const {data: subsectionArticles} = usePreviewSubscription(subsectionArticleQueryNoFeature, {
       params: {id: category.categoryId},
       initialData: subsectionArticleData,
-      enabled: preview || router.query.preview !== null,
+      enabled: preview || !!router.query.preview,
     })
   }
 
@@ -95,7 +101,11 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
 export const getStaticProps: GetStaticProps = async ({params, preview = false }) => {
 
   const category = await getClient(preview).fetch(
-        categoryAndFeaturedArticleQuery, {hub: params?.hub})
+        categoryAndFeaturedArticleQuery, {hub: params?.hub}) 
+
+  if (!category) {
+    return {notFound: true}
+  }
 
   let subsectionArticles;
   if (category.featuredArticle) {

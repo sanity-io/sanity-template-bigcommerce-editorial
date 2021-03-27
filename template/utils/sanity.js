@@ -13,10 +13,9 @@ import {
 } from '../components'
 
 const config = {
-  //TODO: put everything in env
-  projectId: 'rrw497vy',
-  dataset: 'production', 
-  useCdn: false //check if production
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+  useCdn: process.env.NODE_ENV === 'production',
   
 }
 

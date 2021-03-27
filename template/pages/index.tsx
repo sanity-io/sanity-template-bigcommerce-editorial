@@ -21,22 +21,9 @@ function IndexPage({categories, featuredArticleData, recentArticleData, preview}
     initialData: {
       featuredArticles: featuredArticleData,
       recentArticles: recentArticleData},
-    enabled: preview || router.query.preview !== null,
+      enabled: preview || !!router.query.preview,
   })
 
-
-  //if there aren't enough featured articles, supplement with most recent
-  let supplementedFeatures = []
-  if (!featuredArticles || !featuredArticles.length) {
-    supplementedFeatures = recentArticles.splice(0, 3)
-  } else {
-    supplementedFeatures = [
-      ...featuredArticles,
-      ...recentArticles.splice(0, 3 - featuredArticles.length)
-    ]
-  }
-
-  const formattedFeatures = supplementedFeatures.map(feat => coalesceCampaignAndFeature(feat))
 
   const articlesByMonth: MonthArticle[] = []
   recentArticles.forEach(article => {
@@ -53,6 +40,8 @@ function IndexPage({categories, featuredArticleData, recentArticleData, preview}
       articlesByMonth[articlesByMonth.length - 1].articles.push(article)
     }
   })
+
+  const formattedFeatures = featuredArticles.map(feat => coalesceCampaignAndFeature(feat))
 
   return (
     <>
@@ -78,7 +67,8 @@ export const getStaticProps: GetStaticProps = async ({params, preview = false })
     props: {
       categories: await getClient(preview).fetch(`*[_type == "category"]{name,'slug': slug.current}`),
       featuredArticleData: featuredArticles,
-      recentArticleData: recentArticles
+      recentArticleData: recentArticles,
+      preview: preview
     }
   })
 }

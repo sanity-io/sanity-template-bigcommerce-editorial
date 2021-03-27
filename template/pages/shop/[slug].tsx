@@ -19,12 +19,14 @@ export default function ProductPage({categories, productData, preview}
   const router = useRouter();
   if (!router.isFallback && !productData?.slug) {
     return <Error statusCode={404} />;
+  } else if (router.isFallback) {
+    return <div>Loading...</div>
   }
 
   const {data: product} = usePreviewSubscription(productDetailPageQuery, {
     params: {slug: router.query.slug},
     initialData: productData,
-    enabled: preview || router.query.preview !== null,
+    enabled: preview || !!router.query.preview,
   })
 
   const addItemToCart = useAddItem() 
@@ -90,7 +92,7 @@ export const getStaticPaths: GetStaticPaths = async ({locales}) => {
 
     return {
       paths: slugsWithLocales,
-     fallback: true
+     fallback: false
    }
 }
 

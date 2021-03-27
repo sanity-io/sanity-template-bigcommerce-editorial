@@ -17,12 +17,14 @@ export default function CampaignPage({categories, campaignData, preview}
   const router = useRouter();
   if (!router.isFallback && !campaignData?.slug) {
     return <Error statusCode={404} />;
+  } else if (router.isFallback) {
+    return <div>Loading...</div>
   }
 
   const {data: campaign} = usePreviewSubscription(campaignQuery, {
     params: {slug: campaignData.slug},
     initialData: campaignData,
-    enabled: preview || router.query.preview !== null,
+    enabled: preview || router.query.preview,
   })
 
   const parsedContent = campaign.content.map(({_type, ...block}
@@ -64,7 +66,7 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
   const paths = {paths: campaignSlugs.map(
     (slugObj) => ({params: slugObj}))}
     
-  return { ...paths, fallback: true }
+  return { ...paths, fallback: false }
 }
 
 export const getStaticProps: GetStaticProps = async ({params, preview = false}) => {

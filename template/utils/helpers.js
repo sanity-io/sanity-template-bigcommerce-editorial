@@ -67,7 +67,8 @@ export function handleLocaleField(fieldName, obj, locale) {
   if (!locale || locale == 'en-US') {
     return obj[fieldName]
   } else {
-    return obj[`locale_${locale}_${fieldName}`]
+    const localeLabel = `locale_${locale}_${fieldName}`
+    return obj[localeLabel] ?? obj[fieldName]
   }
 }
 
