@@ -30,8 +30,8 @@ const OverlayText = styled.div`
 export function TextOverlayFeature({title, text, image, url, fullSize}
   : {title: string, text: any | any[], image: Image, url: string, fullSize: boolean}) {
 
-    const imageUrl = (fullSize) ?
-      urlFor(image).url() : urlFor(image).height(600).url()
+    const imageUrl = ((fullSize) ?
+      urlFor(image).url() : urlFor(image).height(600).url())!!
 
     return  (
       <Box flex={1} style={{ minWidth: '350px', height: (fullSize) ? '100vh' : '400px'}}>  
