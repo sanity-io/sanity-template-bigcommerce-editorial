@@ -15,9 +15,9 @@ export function IFramePreview({document: {displayed: { slug = {}}}}, prefix){
   let url;
 
   if (prefix && typeof(prefix) != 'undefined') {
-    url = `${process.env.SANITY_STUDIO_PREVIEW_URL}/${prefix}/${slug.current}?preview`
+    url = `${process.env.SANITY_STUDIO_PREVIEW_URL}/${prefix}/${slug.current}?preview=true`
   } else {
-    url = `${process.env.SANITY_STUDIO_PREVIEW_URL}/${slug.current}?preview`
+    url = `${process.env.SANITY_STUDIO_PREVIEW_URL}/${slug.current}?preview=true`
   }
   
   return (

@@ -4,18 +4,27 @@ import Link from 'next/link'
 import { urlFor, PortableText } from '$utils/sanity'
 import styled from 'styled-components'
 
-const OverlayBox = styled.div`
-    height: 100%;
-    width: 100%;
-    position: relative;
-  `
+const PaneContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  background: black;
+  overflow: hidden;
+  position: relative;
+`
+
+const PaneImage = styled.img`
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  opacity: 0.65;
+`
 
 const OverlayText = styled.div`
   color: white;
   position: absolute;
-  top: 40%;
-  left: 35%;
-  transform: translate(-50%, -50%);
+  top: 20%;
+  left: 5%;
+  width: 50%;
 `
 
 export function TextOverlayFeature({title, text, image, url, fullSize}
@@ -24,19 +33,10 @@ export function TextOverlayFeature({title, text, image, url, fullSize}
     const imageUrl = (fullSize) ?
       urlFor(image).url() : urlFor(image).height(600).url()
 
-    const backgroundImageStyle = {
-      backgroundSize: 'cover',
-      background: `
-        linear-gradient(
-          rgba(0, 0, 0, 0.4),
-          rgba(0, 0, 0, 0.4)
-        ),
-        url(${imageUrl})`
-    }
-
     return  (
       <Box flex={1} style={{ minWidth: '350px', height: (fullSize) ? '100vh' : '400px'}}>  
-          <OverlayBox style={backgroundImageStyle}>
+          <PaneContainer>
+            <PaneImage src={imageUrl} />
             <OverlayText>
               <Heading size={3}>
                 {title}
@@ -59,7 +59,7 @@ export function TextOverlayFeature({title, text, image, url, fullSize}
                 }
               </Box>
             </OverlayText>
-          </OverlayBox>
+          </PaneContainer>
         </Box>
     )
   }

@@ -24,7 +24,7 @@ export default function CampaignPage({categories, campaignData, preview}
   const {data: campaign} = usePreviewSubscription(campaignQuery, {
     params: {slug: campaignData.slug},
     initialData: campaignData,
-    enabled: preview || router.query.preview,
+    enabled: preview || !!router.query.preview,
   })
 
   const parsedContent = campaign.content.map(({_type, ...block}
