@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "concurrently \"next\" \"cd studio && sanity start\"",
     "start": "next start",
-    "build": "npm run build:web",
+    "build": "npm run build:sanity && npm run build:web",
     "build:web": "next build",
     "build:sanity": "cd studio && npx sanity build ../public/studio -y && cd ..",
     "postinstall": "lerna bootstrap"

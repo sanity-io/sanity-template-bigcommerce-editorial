@@ -45,3 +45,5 @@ yarn-error.log*
 
 #data
 *.ndjson
+
+template/public/studio
