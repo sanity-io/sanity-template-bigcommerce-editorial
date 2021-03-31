@@ -103,6 +103,17 @@ async function buildList() {
               .schemaType('siteSettings')
               .documentId('siteSettings')
               .title('Index Page Settings')
+              .views([
+                  S.view.form(),
+                  S.view.component(document =>
+                  <iframe
+                  src={`${process.env.SANITY_STUDIO_PREVIEW_URL}?preview=true`}
+                    style={{ width: '100%', height: '100%', border: 'none' }}
+                  />
+                 )
+                .title('Web Preview')
+                .icon(MdRemoveRedEye)
+              ])
           ),
          S.documentTypeListItem('subsection')
           .title('Subsection options')
