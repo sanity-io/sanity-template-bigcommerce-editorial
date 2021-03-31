@@ -1,7 +1,8 @@
 {
   "root": true,
   "project": {
-    "name": "sanity-template-bigcommerce-editorial"
+    "name": "sanity-template-bigcommerce-editorial",
+    "basePath": "/studio"
   },
   "api": {
     "projectId": "rrw497vy",
