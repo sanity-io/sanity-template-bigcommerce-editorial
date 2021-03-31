@@ -2,7 +2,7 @@ import React from 'react'
 import SanityMobilePreview from 'sanity-mobile-preview'
 import 'sanity-mobile-preview/dist/index.css?raw'
 
-export function IFramePreview({document: {displayed: { slug = {}}}}, prefix){
+export function IFramePreview(baseUrl, {document: {displayed: { slug = {}}}}, prefix){
 
   if (!slug || typeof(slug) == 'undefined') {
     return (
@@ -15,9 +15,9 @@ export function IFramePreview({document: {displayed: { slug = {}}}}, prefix){
   let url;
 
   if (prefix && typeof(prefix) != 'undefined') {
-    url = `${process.env.SANITY_STUDIO_PREVIEW_URL}/${prefix}/${slug.current}?preview=true`
+    url = `${baseUrl}/${prefix}/${slug.current}?preview=true`
   } else {
-    url = `${process.env.SANITY_STUDIO_PREVIEW_URL}/${slug.current}?preview=true`
+    url = `${baseUrl}/${slug.current}?preview=true`
   }
   
   return (

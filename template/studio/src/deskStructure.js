@@ -13,6 +13,9 @@ import { MdEdit,
 import { IFramePreview, MobilePreview } from './preview'
 import React from 'react'
 
+const BASE_PREVIEW_URL = (process.env.NODE_ENV == 'production') ?  
+  '../../' : 'http://localhost:3000'
+
 async function categoriesToListItems() {
   const query = `*[_type=='category' && !(_id in path("drafts.**"))]{
       name, _id, slug,
@@ -42,10 +45,10 @@ async function categoriesToListItems() {
                     .documentId(cat._id)
                     .views([
                       S.view.form(), 
-                      S.view.component(document => IFramePreview(document))
+                      S.view.component(document => IFramePreview(BASE_PREVIEW_URL, document))
                         .title('Web Preview')
                         .icon(MdRemoveRedEye),
-                      S.view.component(document => MobilePreview(document))
+                      S.view.component(document => MobilePreview(BASE_PREVIEW_URL, document))
                         .title('Mobile Preview')
                         .icon(MdStayPrimaryPortrait)
                     ])
@@ -76,11 +79,11 @@ function createSubsectionListItems(categorySlug, subsections) {
                 .views([
                   S.view.form(),   
                   S.view.component(document =>
-                    IFramePreview(document, `${categorySlug}/${sub.slug.current}`))
+                    IFramePreview(BASE_PREVIEW_URL, document, `${categorySlug}/${sub.slug.current}`))
                     .title('Web Preview')
                     .icon(MdRemoveRedEye),
                   S.view.component(document => 
-                    IFramePreview(document, `${categorySlug}/${sub.slug.current}`))
+                   MobilePreview(BASE_PREVIEW_URL, document, `${categorySlug}/${sub.slug.current}`))
                     .title('Mobile Preview')
                     .icon(MdStayPrimaryPortrait)
                 ])
@@ -107,7 +110,7 @@ async function buildList() {
                   S.view.form(),
                   S.view.component(document =>
                   <iframe
-                  src={`${process.env.SANITY_STUDIO_PREVIEW_URL}?preview=true`}
+                  src={`${BASE_PREVIEW_URL}?preview=true`}
                     style={{ width: '100%', height: '100%', border: 'none' }}
                   />
                  )
@@ -136,10 +139,12 @@ async function buildList() {
                     .documentId(id)
                     .views([
                       S.view.form(),
-                      S.view.component(document => IFramePreview(document, 'shop'))
+                      S.view.component(document => IFramePreview(
+                      BASE_PREVIEW_URL, document, 'shop'))
                         .title('Web Preview')
                         .icon(MdRemoveRedEye),
-                      S.view.component(document => MobilePreview(document, 'shop'))
+                      S.view.component(document => MobilePreview(
+                      BASE_PREVIEW_URL, document, 'shop'))
                         .title('Mobile Preview')
                         .icon(MdStayPrimaryPortrait)
                     ])
@@ -156,10 +161,12 @@ async function buildList() {
                     .documentId(id)
                     .views([
                       S.view.form(),
-                      S.view.component(document => IFramePreview(document, 'shop/campaign'))
+                      S.view.component(document => IFramePreview(
+                        BASE_PREVIEW_URL, document, 'shop/campaign'))
                         .title('Web Preview')
                         .icon(MdRemoveRedEye),
-                      S.view.component(document => MobilePreview(document, 'shop/campaign'))
+                      S.view.component(document => MobilePreview(
+                        BASE_PREVIEW_URL, document, 'shop/campaign'))
                         .title('Mobile Preview')
                         .icon(MdStayPrimaryPortrait)
                     ])

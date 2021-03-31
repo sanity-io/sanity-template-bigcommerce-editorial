@@ -63,7 +63,6 @@ Here are the guidelines for the  studio `.env.development` file:
 
 - `SANITY_STUDIO_BIGCOMMERCE_STORE_HASH=` You can find this anywhere you're logged into your BigCommerce account -- for example, if the URL in my browser is https://store-rix57ghiz3.mybigcommerce.com/manage/dashboard, "rix57ghiz3" is the value I should put here.
 - `SANITY_STUDIO_BIGCOMMERCE_STORE_API_TOKEN=` This is the "import" token you made in the last step.
-- `SANITY_STUDIO_PREVIEW_URL`=localhost:3000 if you're developing locally, otherwise whatever staging environment you'd like to set up.
 
 It's also worthwhile to add these to your Vercel environment!
 
