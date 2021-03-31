@@ -28,7 +28,7 @@ This starter is built to showcase a mix of editorial and e-commerce, taking adva
 
 ## Getting started
 
-The quickest way to get up and running is to go to https://www.sanity.io/create?template=sanity-template-bigcommerce-editorial and create a new project by following the instructions on Sanity.
+The quickest way to get up and running is to go to https://www.sanity.io/create?template=sanity-io/sanity-template-bigcommerce-editorial and create a new project by following the instructions on Sanity.
 
 You can also clone this repo and do some configuration locally -- we'll guide you through the steps on importing your data!
 
