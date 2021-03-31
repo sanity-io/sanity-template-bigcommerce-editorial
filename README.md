@@ -2,7 +2,7 @@
 
 This starter is built to showcase a mix of editorial and e-commerce, taking advantage of page-building components, BigCommerce data integration, and internationalization tooling.
 
-![frontend screenshot of this starter](https://github.com/sanity-io/sanity-template-bigcommerce-editorial/blob/main/assets/frontend.png)
+![frontend screenshot of this starter](https://raw.githubusercontent.com/sanity-io/sanity-template-bigcommerce-editorial/blob/main/assets/frontend.png)
 
 ## BigCommerce
 
