@@ -48,7 +48,9 @@ export function ProductDisplay({product, displayHorizontal, shopNow, width}
       <Box paddingX={4}>
         <Stack>
           { imgBox }
-          { productInfo }
+          <Box paddingTop={1}>
+            { productInfo }
+          </Box>
         </Stack>
       </Box>
     )

@@ -15,15 +15,15 @@ export const productQuery = `
 `
 
 export const articleDisplayQuery = `
-        _id,
-        title,
-        text,
-        "slug": slug.current,
-        'image': {"asset": {"_ref": heroImage.asset._ref}, "crop": heroImage.crop, "hotspot": heroImage.hotspot},
-        "subsection": subsection->{name, "slug": slug.current},
-        "category": subsection->category->{name, "slug": slug.current},
-        excerpt,
-        publishedDate
+  _id,
+  title,
+  text,
+  "slug": slug.current,
+  'image': {"asset": {"_ref": heroImage.asset._ref}, "crop": heroImage.crop, "hotspot": heroImage.hotspot},
+  "subsection": subsection->{name, "slug": slug.current},
+  "category": subsection->category->{name, "slug": slug.current},
+  excerpt,
+  publishedDate
 `
 
 /* ------------ */
@@ -38,9 +38,7 @@ export const indexQuery =  `
     "recentArticles": *[_type == 'article'] | order(publishedDate desc)[0...20]{
       ${articleDisplayQuery}
     },
-  }
-
-`
+  } `
 
 export const categoryAndFeaturedArticleQuery = groq`
   *[_type == 'category' && slug.current == $hub][0]
@@ -67,6 +65,17 @@ export const subsectionArticleQueryHasFeature = groq`
 
 export const subsectionArticleQueryNoFeature = groq`
   *[_type == 'subsection' && category._ref == $id]
+    {
+      name,
+      "slug": slug.current,
+      "articles": *[_type == 'article' && references(^._id)] 
+        | order('publishedDate' desc)[0...2]{
+          ${articleDisplayQuery} 
+        }
+    }`
+
+export const subsectionArticleQuery = groq`
+  *[_type == 'subsection' && slug.current == $slug][0]
     {
       name,
       "slug": slug.current,

@@ -27,7 +27,7 @@ const OverlayText = styled.div`
   width: 50%;
 `
 
-export function IndexFeaturePane({feature, headingSize}: {feature: Feature, headingSize: number}) {
+export function IndexFeaturePane({feature, headingSize}: {feature: Feature, headingSize: number[]}) {
   let imageUrl: string = "/blank.png"
   if (feature.image && feature.image.asset._ref) {
     imageUrl = urlFor(feature.image).url() as string

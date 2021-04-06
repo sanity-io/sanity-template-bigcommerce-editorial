@@ -29,6 +29,10 @@ export default function ArticlePage({categories, articleData, preview}
 
   const content = handleGroupedItems(
     article.content, "listItem", {_key: "orientation", _value: "vertical"})
+
+  if (!!article.storyProducts) {
+    article.storyProducts = article.storyProducts.filter(obj => !!obj.products)
+  }
       
   return (
     <>
@@ -56,10 +60,12 @@ export default function ArticlePage({categories, articleData, preview}
             </Stack>
           </Box>
          <Flex align='center' flex={[0, 0, 0, 1]}>
-           <Box>
-             { article.storyProducts && (
-             <ShopTheStory products={article.storyProducts} /> ) }
-          </Box>
+            { (article.storyProducts 
+                && !!article.storyProducts[0]) && (
+             <Box>
+               <ShopTheStory products={article.storyProducts} /> 
+            </Box>
+           ) }
          </Flex>
         </Flex>
     </>

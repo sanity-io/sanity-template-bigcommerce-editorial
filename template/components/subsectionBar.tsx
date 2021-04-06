@@ -15,7 +15,12 @@ export function SubsectionBar({hub, subsectionArticles}
     return (
       <Container width={1}>
         <Card borderBottom style={{backgroundColor: "#FCFCFF"}} paddingTop={5} paddingBottom={3}>
+     { (subsectionArticles.slug && subsectionArticles.slug != 'undefined') ? 
+            (<Link href={`/${hub}/${subsectionArticles.slug}`}>
               { heading }
+            </Link> ) :
+            <>{ heading }</>
+          }
         </Card>
         <Grid columns={[1, 1, 2]}  padding={[0, 0, 2]}>
           { articlePanes }

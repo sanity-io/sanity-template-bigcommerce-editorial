@@ -28,10 +28,10 @@ export function IFramePreview(baseUrl, {document: {displayed: { slug = {}}}}, pr
   )
 }
 
-export function MobilePreview(document, prefix) {
+export function MobilePreview(baseUrl, document, prefix) {
   return (
     <SanityMobilePreview>
-      { IFramePreview(document, prefix) }
+      { IFramePreview(baseUrl, document, prefix) }
     </SanityMobilePreview>
   )
 }
