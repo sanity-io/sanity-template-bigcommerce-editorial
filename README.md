@@ -2,7 +2,7 @@
 
 This starter is built to showcase a mix of editorial and e-commerce, taking advantage of page-building components, BigCommerce data integration, and internationalization tooling.
 
-![frontend screenshot of this starter](https://github.com/sanity-io/sanity-template-bigcommerce-editorial/blob/main/assets/frontend.png)
+![](https://raw.githubusercontent.com/sanity-io/sanity-template-bigcommerce-editorial/main/assets/frontend.png 'A frontend screenshot of this starter')
 
 ## BigCommerce
 
@@ -28,7 +28,7 @@ This starter is built to showcase a mix of editorial and e-commerce, taking adva
 
 ## Getting started
 
-The quickest way to get up and running is to go to https://www.sanity.io/create?template=sanity-template-bigcommerce-editorial and create a new project by following the instructions on Sanity.
+The quickest way to get up and running is to go to https://www.sanity.io/create?template=sanity-io/sanity-template-bigcommerce-editorial and create a new project by following the instructions on Sanity.
 
 You can also clone this repo and do some configuration locally -- we'll guide you through the steps on importing your data!
 
