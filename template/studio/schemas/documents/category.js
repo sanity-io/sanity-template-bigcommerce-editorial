@@ -26,14 +26,14 @@ export default {
       description: "The featured article for this category",
       type: "reference",
       to: [{type: "article"}, {type: 'campaign'}],
-      // options: {
-      //   filter: ({document}) => {
-      //     return {
-      //       filter: "*[_type == 'article' && references(*[_type == 'subsection' && references($id)]._id)]",
-      //       params: {id: document._id}
-      //     }
-      //   }
-      // }
+      options: {
+        filter: ({document}) => {
+          return {
+            filter: "subsection._ref in *[_type == 'subsection' && category._ref == $id]._id",
+            params: {id: document._id}
+          }
+        }
+      }
     },
     {
       title: "Featured Article Display",
