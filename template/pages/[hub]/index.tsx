@@ -123,7 +123,8 @@ export const getStaticProps: GetStaticProps = async ({params, preview = false })
       subsectionArticleData: subsectionArticles,
       categoryData: category,
       preview
-    }
+    },
+    revalidate: 1
   })
 }
 

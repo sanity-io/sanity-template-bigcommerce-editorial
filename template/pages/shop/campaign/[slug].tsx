@@ -78,6 +78,7 @@ export const getStaticProps: GetStaticProps = async ({params, preview = false}) 
       categories: await getClient(preview).fetch(`*[_type == "category"]{name,'slug': slug.current}`),
       campaignData: campaign,
       preview
-    }
+    },
+    revalidate: 1
   })
 }
