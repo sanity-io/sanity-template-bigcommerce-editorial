@@ -85,7 +85,8 @@ export const subsectionArticleQuery = groq`
         }
     }`
 
-export const articlePageQuery = groq`
+//need to format this way because of odd behavior in previewSubscription in next-sanity
+export const createArticlePageQuery = (slug) => `
   *[_type == "article" && slug.current == $slug][0]{
       title, 
       "slug": slug.current,
@@ -108,6 +109,7 @@ export const articlePageQuery = groq`
         },
         "image": {"asset": heroImage.asset, "crop": heroImage.crop, "hotspot": heroImage.hotspot}
      }`
+
 
 
 /* ---------------- */
