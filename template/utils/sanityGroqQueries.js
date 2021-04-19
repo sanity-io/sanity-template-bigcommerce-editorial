@@ -87,7 +87,7 @@ export const subsectionArticleQuery = groq`
 
 //need to format this way because of odd behavior in previewSubscription in next-sanity
 export const createArticlePageQuery = (slug) => `
-  *[_type == "article" && slug.current == $slug][0]{
+  *[_type == "article" && slug.current == '${slug}'][0]{
       title, 
       "slug": slug.current,
       "subsection": subsection->{name, "slug": slug.current},

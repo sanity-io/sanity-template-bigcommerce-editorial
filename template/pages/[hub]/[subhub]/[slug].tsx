@@ -89,10 +89,10 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
 }
 
 
-export const getStaticProps: GetStaticProps = async ({params, preview = false}) => {
+export const getStaticProps: GetStaticProps = async ({params, preview}) => {
 
-  const article = await getClient(preview).fetch(articlePageQuery,
-    {slug: params?.slug})
+  const query = createArticlePageQuery(params?.slug)
+  const article = await getClient(preview).fetch(query)
 
   return ({
     props: {
