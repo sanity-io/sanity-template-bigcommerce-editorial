@@ -13,13 +13,13 @@ import { MdEdit,
 import { IFramePreview, MobilePreview } from './preview'
 import React from 'react'
 
-const BASE_PREVIEW_URL = (process.env.NODE_ENV == 'production') ?  
+const BASE_PREVIEW_URL = (process.env.NODE_ENV == 'production') ?
   '../../' : 'http://localhost:3000'
 
 async function categoriesToListItems() {
   const query = `*[_type=='category' && !(_id in path("drafts.**"))]{
       name, _id, slug,
-      'subsections': *[_type=='subsection'&& references(^._id) ]{name, _id, slug} 
+      'subsections': *[_type=='subsection' && references(^._id) && !(_id in path("drafts.**"))]{name, _id, slug}
     }`
   const categories = await client.fetch(query)
 
@@ -44,7 +44,7 @@ async function categoriesToListItems() {
                     .schemaType('category')
                     .documentId(cat._id)
                     .views([
-                      S.view.form(), 
+                      S.view.form(),
                       S.view.component(document => IFramePreview(BASE_PREVIEW_URL, document))
                         .title('Web Preview')
                         .icon(MdRemoveRedEye),
@@ -54,16 +54,17 @@ async function categoriesToListItems() {
                     ])
               ),
               ...createSubsectionListItems(cat.slug.current, cat.subsections)
-            ]) 
-        ) 
+            ])
+        )
     )
-  ) 
+  )
 }
 
 function createSubsectionListItems(categorySlug, subsections) {
   return subsections.map(sub => (
       S.listItem()
         .title(sub.name)
+        .id(sub._id)
         .child(
           S.documentTypeList('article')
             .title(sub.name)
@@ -72,23 +73,23 @@ function createSubsectionListItems(categorySlug, subsections) {
             .initialValueTemplates([
               S.initialValueTemplateItem('article-with-subsection', {subsectionId: sub._id})
             ])
-            .child(id => 
+            .child(id =>
               S.document()
                 .schemaType('article')
                 .documentId(id)
                 .views([
-                  S.view.form(),   
+                  S.view.form(),
                   S.view.component(document =>
                     IFramePreview(BASE_PREVIEW_URL, document, `${categorySlug}/${sub.slug.current}`))
                     .title('Web Preview')
                     .icon(MdRemoveRedEye),
-                  S.view.component(document => 
+                  S.view.component(document =>
                    MobilePreview(BASE_PREVIEW_URL, document, `${categorySlug}/${sub.slug.current}`))
                     .title('Mobile Preview')
                     .icon(MdStayPrimaryPortrait)
                 ])
             )
-          ) 
+          )
       )
     )
 }
@@ -123,17 +124,17 @@ async function buildList() {
           .icon(MdSettings),
          S.divider(),
         ...await categoriesToListItems(),
-         S.divider(), 
+         S.divider(),
          S.documentTypeListItem('person')
           .title('Authors')
           .icon(MdPerson),
-         S.divider(), 
+         S.divider(),
          S.listItem()
             .title('Shop')
             .icon(MdShoppingCart)
             .child(
               S.documentTypeList('product')
-                .child(id => 
+                .child(id =>
                   S.document()
                     .schemaType('product')
                     .documentId(id)
@@ -155,7 +156,7 @@ async function buildList() {
             .icon(MdTrendingUp)
             .child(
               S.documentTypeList('campaign')
-                .child(id => 
+                .child(id =>
                   S.document()
                     .schemaType('campaign')
                     .documentId(id)
