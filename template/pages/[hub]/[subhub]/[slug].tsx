@@ -7,25 +7,24 @@ import { NavBar, SocialBar, Breadcrumbs, ShopTheStory } from '$components'
 import { Category, Article, ArticleSlug } from '../../../types'
 import { getClient, urlFor, PortableText, usePreviewSubscription } from '$utils/sanity'
 import { handleGroupedItems } from '$utils/helpers'
-import { articlePageQuery }  from '$utils/sanityGroqQueries'
-
+import { createArticlePageQuery, productQuery }  from '$utils/sanityGroqQueries'
 
 export default function ArticlePage({categories, articleData, preview}
   : {categories: Category[], articleData: Article, preview: boolean}) {
 
   const router = useRouter();
-  if (!router.isFallback && !articleData?.slug) {
+
+  const {data: article} = usePreviewSubscription(createArticlePageQuery(router.query.slug), {
+    params: {slug: router.query.slug},
+    initialData: articleData,
+    enabled: preview || !!router.query.preview,
+  })
+
+  if (!router.isFallback && !article?.slug) {
     return <Error statusCode={404} />;
   } else if (router.isFallback) {
     return <div>Loading...</div>
   }
-
-
-  const {data: article} = usePreviewSubscription(articlePageQuery, {
-    params: {slug: articleData.slug},
-    initialData: articleData,
-    enabled: preview || !!router.query.preview,
-  })
 
   const content = handleGroupedItems(
     article.content, "listItem", {_key: "orientation", _value: "vertical"})
@@ -90,16 +89,17 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
 }
 
 
-export const getStaticProps: GetStaticProps = async ({params, preview = false}) => {
+export const getStaticProps: GetStaticProps = async ({params, preview}) => {
 
-  const article = await getClient(preview).fetch(articlePageQuery,
-    {slug: params?.slug})
+  const query = createArticlePageQuery(params?.slug)
+  const article = await getClient(preview).fetch(query)
 
   return ({
     props: {
       categories: await getClient(preview).fetch(`*[_type == "category"]{name,'slug': slug.current}`),
       articleData: article
-    }
+    },
+    revalidate: 60
   })
 }
 

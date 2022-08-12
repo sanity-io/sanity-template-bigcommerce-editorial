@@ -69,7 +69,8 @@ export const getStaticProps: GetStaticProps = async ({params, preview = false })
       featuredArticleData: featuredArticles,
       recentArticleData: recentArticles,
       preview: preview
-    }
+    },
+    revalidate: 60
   })
 }
 

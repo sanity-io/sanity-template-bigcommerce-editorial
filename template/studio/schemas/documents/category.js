@@ -25,15 +25,7 @@ export default {
       name: "featuredArticle",
       description: "The featured article for this category",
       type: "reference",
-      to: [{type: "article"}, {type: 'campaign'}],
-      options: {
-        filter: ({document}) => {
-          return {
-            filter: "subsection._ref in *[_type == 'subsection' && category._ref == $id]._id",
-            params: {id: document._id}
-          }
-        }
-      }
+      to: [{type: "article"}, {type: 'campaign'}]
     },
     {
       title: "Featured Article Display",
