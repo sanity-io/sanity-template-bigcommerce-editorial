@@ -79,6 +79,6 @@ export const getStaticProps: GetStaticProps = async ({params, preview = false}) 
       campaignData: campaign,
       preview
     },
-    revalidate: 1
+    revalidate: 60
   })
 }

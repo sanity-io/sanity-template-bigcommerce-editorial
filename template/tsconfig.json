@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -15,11 +19,20 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "$components": ["./components"],
-      "$theme": ["./theme"],
-      "$utils": ["./utils"],
-      "$utils/*": ["./utils/*"]
-    }
+      "$components": [
+        "./components"
+      ],
+      "$theme": [
+        "./theme"
+      ],
+      "$utils": [
+        "./utils"
+      ],
+      "$utils/*": [
+        "./utils/*"
+      ]
+    },
+    "incremental": true
   },
   "include": [
     "next-env.d.ts",

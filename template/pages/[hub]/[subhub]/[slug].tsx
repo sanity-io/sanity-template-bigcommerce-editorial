@@ -99,7 +99,7 @@ export const getStaticProps: GetStaticProps = async ({params, preview}) => {
       categories: await getClient(preview).fetch(`*[_type == "category"]{name,'slug': slug.current}`),
       articleData: article
     },
-    revalidate: 1
+    revalidate: 60
   })
 }
 

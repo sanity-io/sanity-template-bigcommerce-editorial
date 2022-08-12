@@ -106,6 +106,6 @@ export const getStaticProps: GetStaticProps = async ({params, preview = false}) 
       productData: product,
       preview
     },
-    revalidate: 1
+    revalidate: 60
   })
 }

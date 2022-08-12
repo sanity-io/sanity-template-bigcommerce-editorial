@@ -124,7 +124,7 @@ export const getStaticProps: GetStaticProps = async ({params, preview = false })
       categoryData: category,
       preview
     },
-    revalidate: 1
+    revalidate: 60
   })
 }
 

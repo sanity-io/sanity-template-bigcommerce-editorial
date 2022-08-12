@@ -26,7 +26,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       categories: await sanityClient.fetch(`*[_type == 'category']{name,'slug': slug.current}`),
       products: await sanityClient.fetch(shopQuery) 
     },
-    revalidate: 1
+    revalidate: 60
   })
 
 }
